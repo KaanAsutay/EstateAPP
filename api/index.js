@@ -4,6 +4,8 @@ import dotenv from 'dotenv'
 import userRouter from "./routes/user.route.js";
 import authRouter from "./routes/auth.route.js";
 
+// npm run dev hem backend hem frontend
+
 dotenv.config();
 
 mongoose.connect(process.env.MONGO)
