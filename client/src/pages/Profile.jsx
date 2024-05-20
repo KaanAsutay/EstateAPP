@@ -1,6 +1,6 @@
 import {useSelector} from 'react-redux'
 import { useRef, useState, useEffect } from 'react'
-import { getStorage, ref, uploadBytesResumable } from 'firebase/storage'
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 import { app } from '../firebase'
 
 
@@ -10,6 +10,10 @@ export default function Profile() {
   const {currentUser} = useSelector((state) => state.user)
   const [file, setFile] = useState(undefined)
   const [filePerc, setFilePerc] = useState(0)
+  const [fileUploadError, setFileUploadError] = useState(false)
+  const [formData, setFormData] = useState({})
+
+
   console.log(filePerc)
   console.log(file)
 
@@ -36,7 +40,17 @@ export default function Profile() {
       (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         setFilePerc(Math.round(progress))
-      });
+      },
+      (error) => {
+        setFileUploadError(true)
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref)
+        .then((getDownloadURL) => {
+          setFormData({ ...formData, avatar: downloadURL })
+        })
+      }
+    );
     };
 
   return (
