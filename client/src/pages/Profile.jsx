@@ -13,7 +13,7 @@ export default function Profile() {
   const [fileUploadError, setFileUploadError] = useState(false)
   const [formData, setFormData] = useState({})
 
-  // firebase storage
+      // firebase storage
       // allow read;
       // allow write: if
       // request.resource.size < 2 * 1024 * 1024 &&
@@ -48,6 +48,10 @@ export default function Profile() {
       }
     );
     };
+
+    const handleChange = (e) => {
+      setFormData({ ...formData, [e.target.id]: e.target.value })
+    }
 
   return (
     <div className='p-3 max-w-lg mx-auto'>
@@ -84,15 +88,19 @@ export default function Profile() {
         <input 
           type="text" 
           placeholder='username'
+          defaultValue={currentUser.username}
           id='username' 
           className='border p-3 rounded-lg'
+          onChange={handleChange}
         />
 
         <input 
           type="text" 
           placeholder='email'
-          id='email' 
+          id='email'
+          defaultValue={currentUser.email}
           className='border p-3 rounded-lg'
+          onChange={handleChange}
         />
 
         <input 
@@ -100,6 +108,7 @@ export default function Profile() {
           placeholder='password'
           id='password' 
           className='border p-3 rounded-lg'
+          onChange={handleChange}
         />
 
         <button className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>update</button>
