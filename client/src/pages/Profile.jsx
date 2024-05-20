@@ -1,5 +1,6 @@
 import {useSelector} from 'react-redux'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
+import { getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 
 export default function Profile() {
 
@@ -14,6 +15,25 @@ export default function Profile() {
       // request.resource.size < 2 * 1024 * 1024 &&
       // request.resource.contentType.matches('image/.*')
 
+
+    useEffect(() => {
+      if(file) {
+        handleFileUpload();
+      }
+    }, [file])
+
+    const handleFileUpload = (file) => {
+      const storage = getStorage(app)
+      const fileName = new Date().getTime() + file.name;
+      const storageRef = ref(storage, fileName)
+      const uploadTask = uploadBytesResumable(storageRef, file)
+
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          
+        }
+      )
+    }
 
   return (
     <div className='p-3 max-w-lg mx-auto'>
