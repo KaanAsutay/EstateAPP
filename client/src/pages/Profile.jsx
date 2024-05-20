@@ -1,10 +1,12 @@
 import {useSelector} from 'react-redux'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 export default function Profile() {
 
   const fileRef = useRef(null)
   const {currentUser} = useSelector((state) => state.user)
+  const [file, setFile] = useState(undefined)
+  console.log(file)
 
   // firebase storage
       // allow read;
@@ -18,7 +20,8 @@ export default function Profile() {
         <h1 className="text3xl font-semibold text-center my-7"> Profile </h1>
         <form className='flex flex-col gap-4'>
 
-        <input 
+        <input
+          onChange={(e)=>setFile(e.target.files[0])} 
           type='file' 
           ref={fileRef} 
           hidden 
