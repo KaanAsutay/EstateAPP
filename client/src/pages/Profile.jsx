@@ -1,12 +1,16 @@
 import {useSelector} from 'react-redux'
 import { useRef, useState, useEffect } from 'react'
 import { getStorage, ref, uploadBytesResumable } from 'firebase/storage'
+import { app } from '../firebase'
+
 
 export default function Profile() {
 
   const fileRef = useRef(null)
   const {currentUser} = useSelector((state) => state.user)
   const [file, setFile] = useState(undefined)
+  const [filePerc, setFilePerc] = useState(0)
+  console.log(filePerc)
   console.log(file)
 
   // firebase storage
@@ -18,7 +22,7 @@ export default function Profile() {
 
     useEffect(() => {
       if(file) {
-        handleFileUpload();
+        handleFileUpload(file);
       }
     }, [file])
 
@@ -28,12 +32,12 @@ export default function Profile() {
       const storageRef = ref(storage, fileName)
       const uploadTask = uploadBytesResumable(storageRef, file)
 
-      uploadTask.on('state_changed',
-        (snapshot) => {
-          
-        }
-      )
-    }
+      uploadTask.on('state_changed', 
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        setFilePerc(Math.round(progress))
+      });
+    };
 
   return (
     <div className='p-3 max-w-lg mx-auto'>
