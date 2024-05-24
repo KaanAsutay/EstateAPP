@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux'
 export default function Profile() {
 
   const fileRef = useRef(null)
-  const {currentUser} = useSelector((state) => state.user)
+  const {currentUser, loading, error} = useSelector((state) => state.user)
   const [file, setFile] = useState(undefined)
   const [filePerc, setFilePerc] = useState(0)
   const [fileUploadError, setFileUploadError] = useState(false)
@@ -130,14 +130,18 @@ export default function Profile() {
         />
 
         <input 
-          type="text" 
+          type="password" 
           placeholder='password'
           id='password' 
           className='border p-3 rounded-lg'
           onChange={handleChange}
         />
 
-        <button className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>update</button>
+        <button
+          disabled={loading}
+          className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>
+          {loading ? 'Loading...' : 'Update'}
+        </button>
 
       </form>
       <div className='flex justify-between mt-5'>
