@@ -5,6 +5,7 @@ export default function CreateListing() {
     <main className='p-3 max-w-4xl mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>Create a Listing</h1>
       <form className='flex flex-col sm:flex-row'>
+
         <div className="flex flex-col gap-4 flex-1">
 
             <input 
@@ -33,7 +34,40 @@ export default function CreateListing() {
             required 
             />
 
+            <div className='flex gap-6 flex-wrap'>
+
+                <div className='flex gap-2'>
+                    <input type="checkbox" id='sale' className='w-5' />
+                    <span>Sell</span>
+                </div>
+
+                <div className='flex gap-2'>
+                    <input type="checkbox" id='rent' className='w-5' />
+                    <span>Rent</span>
+                </div>
+
+                <div className='flex gap-2'>
+                    <input type="checkbox" id='parking' className='w-5' />
+                    <span>Parking spot</span>
+                </div>
+
+                <div className='flex gap-2'>
+                    <input type="checkbox" id='furnished' className='w-5' />
+                    <span>Furnished</span>
+                </div>
+
+                <div className='flex gap-2'>
+                    <input type="checkbox" id='offer' className='w-5' />
+                    <span>Offer</span>
+                </div>
+
+
+
+
+            </div>
+
         </div>
+
       </form> 
     </main>
   )
