@@ -1,6 +1,10 @@
-import React from 'react'
+import { useState } from "react"
 
 export default function CreateListing() {
+
+    const [files, setFiles] = useState([])
+
+    
   return (
     <main className='p-3 max-w-4xl mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>Create a Listing</h1>
@@ -126,7 +130,8 @@ export default function CreateListing() {
         <div className='flex flex-col flex-1 gap-4'>
             <p className='font-semibold'>Images: <span className='font-normal text-gray-600 ml-2'>The first image will be the cover (max 6) </span></p>
             <div className='flex gap-4'>
-                <input 
+                <input
+                onChange={(e) => setFiles(e.target.files)}
                 className='p-3 border border-gray-300 rounded w-full' 
                 type="file" 
                 id='images' 
