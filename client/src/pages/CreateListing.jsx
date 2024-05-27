@@ -1,20 +1,32 @@
 import { useState } from "react"
-import { getDownloadURL, getStorage, uploadBytesResumable } from 'firebase/storage'
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 import { app } from '../firebase'
 
 export default function CreateListing() {
 
     const [files, setFiles] = useState([])
+    const [formData, setFormData] = useState({
+        imageUrls: [],
+    })
+    const [imageUploadError, setImageUploadError] = useState(false)
+    console.log(formData)
 
 
     const handleImageSubmit = (e) => {
-        if (files.length > 0 && files.length < 7) {
+        if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
         const promises = [];
 
         for (let i = 0; i < files.length; i++) {
             promises.push(storeImage(files[1]));
         }
-
+        Promise.all(promises).then((urls) => {
+            setFormData({ ...formData, imageUrls: formData.imageUrls.concat(urls) });
+            setImageUploadError(false)
+        }).catch((err) => {
+            setImageUploadError('Image upload failed (2 mb max per image)')
+        })
+    } else {
+        setImageUploadError('You can only upload 6 images per listing')
     }
 }
 
@@ -26,6 +38,11 @@ export default function CreateListing() {
             const uploadTask = uploadBytesResumable(storageRef, file)
             uploadTask.on(
                 "state_changed",
+                (snapshot) => {
+                    const progress =
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log(`Upload is ${progress}% done`)
+                },
                 (error) => {
                     reject(error)
                 },
@@ -179,6 +196,15 @@ export default function CreateListing() {
                 Upload
                 </button>
             </div>
+            <p className="text-red-700 text-sm">{imageUploadError && imageUploadError}</p>
+            {
+                formData.imageUrls.length > 0 && formData.imageUrls.map((url) => {
+                    <div className="flex justify-between p-3 border items-center">
+                        <img src={url} alt="listing image" className="w-20 h-20 object-contain rounded-lg" />
+                        <button className="p-3 text-red-700 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">Delete</button>
+                    </div>
+                })
+            }
             <button className='p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>Create Listing</button>
         </div>
 
