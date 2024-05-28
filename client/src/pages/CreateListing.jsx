@@ -126,6 +126,12 @@ export default function CreateListing() {
         e.preventDefault();
 
         try {
+          if (formData.imageUrls.length < 1) 
+          return setError('You must upload at least one image')
+
+          if (+formData.regularPrice < +formData.discountPrice)
+          return setError('Discount price must be lower than regular price')
+
           setLoading(true)
           setError(false)
           const res = await fetch('/api/listing/create', {
@@ -296,11 +302,13 @@ export default function CreateListing() {
                     </div>
                 </div>
 
+                {formData.offer && (
+
                 <div className='flex items-center gap-2'>
                     <input 
                     type="number" 
                     id='discountPrice' 
-                    min='50' 
+                    min='0' 
                     max='1000000' 
                     required 
                     className='p-3 border border-gray-300 rounded-lg'
@@ -313,8 +321,9 @@ export default function CreateListing() {
                     </div>
                 </div>
 
-            </div>
+                )}
 
+            </div>
         </div>
 
         <div className='flex flex-col flex-1 gap-4'>
