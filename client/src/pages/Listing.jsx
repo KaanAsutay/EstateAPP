@@ -23,6 +23,7 @@ export default function Listing() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [contact, setContact] = useState(false);
   const params = useParams();
   const { currentUser } = useSelector((state) => state.user);
 
@@ -134,9 +135,14 @@ export default function Listing() {
                 {listing.furnished ? 'Furnished' : 'Unfurnished'}
               </li>
             </ul>
-            {currentUser && listing.userRef !== currentUser._id && (
-                <button className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'>Contact landlord</button>
+            {currentUser && listing.userRef !== currentUser._id && !contact && (
+                <button 
+                onClick={() => setContact(true)} 
+                className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
+                >Contact landlord
+                </button>
             )}
+            {contact && <Contact/>}
           </div>
         </div>
       )}
