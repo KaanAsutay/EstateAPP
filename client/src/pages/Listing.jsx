@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"
 
 export default function Listing() {
     const [listing, setListing] = useState(null)
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
 
     const params = useParams()
@@ -20,16 +20,25 @@ export default function Listing() {
                     return;
                 }
                 setListing(data)
+                setLoading(false)
+                setError(false)
             } catch (error) {
                 setError(true)
                 setLoading(false)
             }
         }
         fetchListing()
-    })
+    }, [params.listingId])
 
 
   return (
-    <main> {listing && listing.name} </main>
+    <main> 
+        {loading && <p className="text-center my-7 text-2xl">Loading...</p>}
+        {error && <p className="text-center my-7 text-2xl">Something went wrong!</p>}
+        {listing && !loading && !error && (
+            <h1>{listing.name}</h1>
+        )}
+    
+    </main>
   )
 }
