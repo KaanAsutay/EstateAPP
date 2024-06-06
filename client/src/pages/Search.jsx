@@ -7,7 +7,7 @@ export default function Search() {
             <form className='flex flex-col gap-8'>
 
                 <div className="flex items-center gap-2">
-                    <label className='whitespace-nowrap'>Search Term:</label>
+                    <label className='whitespace-nowrap font-semibold'>Search Term:</label>
                     <input 
                     type="text" 
                     id='searchTerm' 
@@ -17,7 +17,7 @@ export default function Search() {
                 </div>
 
                 <div className="flex gap-2 flex-wrap items-center">
-                    <label>Type:</label>
+                    <label className='font-semibold'>Type:</label>
                     
                     <div className="flex gap-2">
                         <input 
@@ -58,7 +58,7 @@ export default function Search() {
                 </div>
 
                 <div className="flex gap-2 flex-wrap items-center">
-                    <label>Amenities:</label>
+                    <label className='font-semibold'>Amenities:</label>
                     
                     <div className="flex gap-2">
                         <input 
@@ -81,7 +81,7 @@ export default function Search() {
                 </div>
 
                 <div className="">
-                    <label>Sort:</label>
+                    <label className='font-semibold'>Sort:</label>
                     <select id="sort_order" className='border rounded-lg p-3'>
                         <option>Price high to low</option>
                         <option>Price low to high</option>
@@ -95,7 +95,7 @@ export default function Search() {
             </form>
         </div>
         <div className="">
-            <h1>Listing results:</h1>
+            <h1 className='text-3xl font-semibold border-b p-3 text-slate-700 mt-5'>Listing results:</h1>
         </div>
     </div>
   )
