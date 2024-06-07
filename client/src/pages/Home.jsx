@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
+import ListingItem from '../components/ListingItem';
 
 export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
@@ -77,6 +78,7 @@ export default function Home() {
         </div>
 
       {/* swiper */}
+
       <Swiper navigation>
         {offerListings &&
           offerListings.length > 0 &&
@@ -94,12 +96,23 @@ export default function Home() {
           ))}
       </Swiper>
 
-      
-
-
-
-
       {/* listing results for offer, sale and rent */}
+
+      <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10'>
+        {offerListings && offerListings.length > 0 && (
+          <div className=''>
+            <div className='my-3'>
+              <h2 className='text-2xl font-semibold text-slate-600'>Recent offers</h2>
+              <Link className='text-sm text-blue-800 hover:underline' to={'/search?offer=true'}>Show more offers</Link>
+            </div>
+            <div className='flex flex-wrap gap-4'>
+              {offerListings.map((listing) => (
+                <ListingItem listing={listing} key={listing._id} />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
 
 
     </div>
