@@ -50,8 +50,6 @@ export default function Home() {
     fetchOfferListings()
   }, [])
 
-
-
   return (
     <div>
 
@@ -142,10 +140,7 @@ export default function Home() {
           </div>
         )}
 
-
       </div>
-
-
     </div>
   )
 }
